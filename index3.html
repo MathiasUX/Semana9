@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Animación de Pollo</title>
+  <style>
+    canvas {
+      background-color: #d0f0c0;
+      display: block;
+      margin: 20px auto;
+      border: 2px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas" width="600" height="200"></canvas>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  let x = 0;
+  let speed = 2;
+
+  function drawChicken(x, y) {
+    // Cuerpo (círculo amarillo)
+    ctx.fillStyle = 'yellow';
+    ctx.beginPath();
+    ctx.ellipse(x, y, 40, 30, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Cabeza (círculo amarillo claro)
+    ctx.beginPath();
+    ctx.ellipse(x + 45, y - 15, 20, 20, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff176';
+    ctx.fill();
+
+    // Pico (triángulo naranja)
+    ctx.fillStyle = 'orange';
+    ctx.beginPath();
+    ctx.moveTo(x + 65, y - 15);
+    ctx.lineTo(x + 80, y - 10);
+    ctx.lineTo(x + 65, y - 5);
+    ctx.closePath();
+    ctx.fill();
+
+    // Ojo (círculo negro)
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.arc(x + 55, y - 20, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Pata izquierda (línea naranja)
+    ctx.strokeStyle = 'orange';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(x + 10, y + 30);
+    ctx.lineTo(x + 10, y + 50);
+    ctx.stroke();
+
+    // Pata derecha (línea naranja)
+    ctx.beginPath();
+    ctx.moveTo(x + 30, y + 30);
+    ctx.lineTo(x + 30, y + 50);
+    ctx.stroke();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawChicken(x, 100);
+
+    x += speed;
+
+    // Cuando llega al borde derecho, cambia dirección
+    if (x > canvas.width - 100 || x < 0) {
+      speed = -speed;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>
